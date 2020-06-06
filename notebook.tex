@@ -1,0 +1,805 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{P2}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{cs5014---machine-learning}{%
+\section{CS5014 - Machine Learning}\label{cs5014---machine-learning}}
+
+\hypertarget{practical-2---classification-of-objects-using-a-radar-signal-and-machine-learning}{%
+\subsection{Practical 2 - Classification of objects using a radar signal
+and machine
+learning}\label{practical-2---classification-of-objects-using-a-radar-signal-and-machine-learning}}
+
+This practical introduces a binary and multiclass classfication task. In
+both cases the data provided was collected via 4 back to back sensors
+which contained 64 components. The maximum, minimum and mean signal
+values were recorded which resulted in 768 features.
+
+The binary classification consisted of identifying if the item detected
+was a book (value=0) or a plastic case (value=1). On the other hand, the
+multiclass classication task required the model to identify if the item
+presented was air, a book, a hand, a knife anda plastic case.
+
+This assignment was divided into various steps as shown below:
+
+    \hypertarget{loading-the-data-and-cleaning-data}{%
+\subsubsection{1. Loading the data and cleaning
+data}\label{loading-the-data-and-cleaning-data}}
+
+The data provided was loaded into Panda dataframes. This included the
+input sensor data and its corresponding output classification and
+lastly, the ``blind'' input sensor data.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}78}]:} \PY{c+c1}{\PYZsh{}Import libraries}
+         \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}\PY{p}{;}
+         \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}\PY{p}{;}
+         \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plt}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k}{import} \PY{n}{PCA}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{LogisticRegression}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{pipeline} \PY{k}{import} \PY{n}{Pipeline}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k}{import} \PY{n}{roc\PYZus{}curve}\PY{p}{,} \PY{n}{confusion\PYZus{}matrix}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{,} \PY{n}{GridSearchCV}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k}{import} \PY{n}{svm}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{multiclass} \PY{k}{import} \PY{n}{OneVsRestClassifier}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{PolynomialFeatures}\PY{p}{,} \PY{n}{StandardScaler}
+         
+         \PY{n}{TEST\PYZus{}SIZE} \PY{o}{=} \PY{l+m+mf}{0.2}
+         
+         \PY{c+c1}{\PYZsh{} Load data and assign headers}
+         \PY{n}{sensorData} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{binary/X.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{header}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{names}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{768}\PY{p}{)}\PY{p}{)}
+         \PY{n}{classifiedData} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{binary/y.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{header}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{names}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{dataToClassify} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{binary/XToClassify.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{header}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{names}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{768}\PY{p}{)}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}Check for null values. Implement cleaning data if there are any.}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{sensorData}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{values}\PY{o}{.}\PY{n}{any}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{classifiedData}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{values}\PY{o}{.}\PY{n}{any}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{dataToClassify}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{values}\PY{o}{.}\PY{n}{any}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}Split the data and ignore test data for the rest of the }
+         \PY{n}{train\PYZus{}input}\PY{p}{,} \PY{n}{test\PYZus{}input}\PY{p}{,} \PY{n}{train\PYZus{}output}\PY{p}{,} \PY{n}{test\PYZus{}output}  \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{sensorData}\PY{p}{,} \PY{n}{classifiedData}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{n}{TEST\PYZus{}SIZE}\PY{p}{,}
+         \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{111}\PY{p}{,} \PY{n}{stratify}\PY{o}{=}\PY{n}{classifiedData}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+False
+False
+False
+
+    \end{Verbatim}
+
+    \hypertarget{plotting-data}{%
+\subsubsection{2. Plotting data}\label{plotting-data}}
+
+In order to understand the data, several plots were generated to find
+potential patterns. The data was plotted on a sensor by sensor basis and
+used color coding to identify each classification label available. For
+the case of the binary data it was possible to see that items labelled
+``book'' registered a smaller signal amplitude in comparison to
+``plastic case''.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}80}]:} \PY{k}{def} \PY{n+nf}{plotDataBySensor}\PY{p}{(}\PY{n}{sensorIndex}\PY{p}{,} \PY{n}{data}\PY{p}{,} \PY{n}{colour}\PY{p}{)}\PY{p}{:}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{sensorIndex} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Sensor value}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Sampling Frame Number}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n}{data}\PY{o}{.}\PY{n}{values}\PY{p}{:}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{p}{(}\PY{n}{row}\PY{p}{[}\PY{n}{sensorIndex}\PY{o}{*}\PY{l+m+mi}{192}\PY{p}{:}\PY{p}{(}\PY{n}{sensorIndex} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{192}\PY{p}{]}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{65}\PY{p}{)}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{colour}\PY{p}{,} \PY{n}{marker}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mf}{0.1}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{plotData}\PY{p}{(}\PY{n}{Xdata}\PY{p}{,} \PY{n}{Ydata}\PY{p}{,} \PY{n}{classificationIndex}\PY{p}{,} \PY{n}{colour}\PY{p}{)}\PY{p}{:}
+             \PY{n}{index} \PY{o}{=} \PY{n}{Ydata}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{n}{Ydata}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n}{classificationIndex}\PY{p}{]}
+             \PY{n}{dataset} \PY{o}{=} \PY{n}{Xdata}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{index}\PY{p}{]}
+             \PY{k}{for} \PY{n}{number} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{plotDataBySensor}\PY{p}{(}\PY{n}{number}\PY{p}{,}\PY{n}{dataset}\PY{p}{,}\PY{n}{colour}\PY{p}{)}
+             
+         \PY{c+c1}{\PYZsh{}Check for any null values}
+         \PY{n}{fig}\PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{16}\PY{p}{)}\PY{p}{)}
+         \PY{n}{plotData}\PY{p}{(}\PY{n}{train\PYZus{}input}\PY{p}{,}\PY{n}{train\PYZus{}output}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plotData}\PY{p}{(}\PY{n}{train\PYZus{}input}\PY{p}{,}\PY{n}{train\PYZus{}output}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/usr/lib64/python3.7/site-packages/matplotlib/cbook/deprecation.py:107: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
+  warnings.warn(message, mplDeprecation, stacklevel=1)
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_4_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} fig= plt.figure(figsize=(20,16))}
+        
+        \PY{c+c1}{\PYZsh{} \PYZsh{} Plot means}
+        \PY{c+c1}{\PYZsh{} for row in sensorData[:40].values:}
+        \PY{c+c1}{\PYZsh{}     plt.scatter(y=row, x=range(1,769), c=\PYZsq{}b\PYZsq{}, marker=\PYZsq{}.\PYZsq{}, linewidths=0.1)}
+        
+        \PY{c+c1}{\PYZsh{} for row in sensorData[40:].values:}
+        \PY{c+c1}{\PYZsh{}     plt.scatter(y=row, x=range(1,769), c=\PYZsq{}r\PYZsq{}, marker=\PYZsq{}.\PYZsq{}, linewidths=0.1)}
+            
+        \PY{c+c1}{\PYZsh{} plt.xlabel(\PYZdq{}Entry number\PYZdq{})}
+        \PY{c+c1}{\PYZsh{} plt.ylabel(\PYZdq{}All sensor values\PYZdq{})}
+        \PY{c+c1}{\PYZsh{} plt.grid()}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{}Histogram distribution of output. Check if data is }
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{}Standardise data}
+        \PY{n}{standardisedSensorData} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{train\PYZus{}input}\PY{p}{)}
+        
+        
+        \PY{n}{pca} \PY{o}{=} \PY{n}{PCA}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{principalComponents} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{standardisedSensorData}\PY{p}{)}
+        \PY{n}{principalDf} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{data} \PY{o}{=} \PY{n}{principalComponents}
+                     \PY{p}{,} \PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PCA1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PCA2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
+        \PY{n}{ax} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+        
+        \PY{n}{test} \PY{o}{=} \PY{n}{principalDf}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{train\PYZus{}output}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Index}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+        \PY{n}{test} \PY{o}{=} \PY{n}{test}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Index}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{n}{index} \PY{o}{=} \PY{n}{train\PYZus{}output}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{n}{train\PYZus{}output}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{]}
+        \PY{n}{pcaData} \PY{o}{=} \PY{n}{test}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{index}\PY{p}{]}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{pcaData}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PCA1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{pcaData}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PCA2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        
+        \PY{n}{index} \PY{o}{=} \PY{n}{train\PYZus{}output}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{n}{train\PYZus{}output}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{]}
+        \PY{n}{pcaData} \PY{o}{=} \PY{n}{test}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{index}\PY{p}{]}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{pcaData}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PCA1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{pcaData}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PCA2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} plt.scatter(x=principalDf[:40][\PYZsq{}PCA1\PYZsq{}], y=principalDf[:40][\PYZsq{}PCA2\PYZsq{}], c=\PYZsq{}b\PYZsq{}, marker=\PYZsq{}.\PYZsq{}, linewidths=0.1)}
+        \PY{c+c1}{\PYZsh{} plt.scatter(x=principalDf[40:][\PYZsq{}PCA1\PYZsq{}], y=principalDf[40:][\PYZsq{}PCA2\PYZsq{}], c=\PYZsq{}r\PYZsq{}, marker=\PYZsq{}.\PYZsq{}, linewidths=0.1)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Principal Component 1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Principal Component 2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{explained-variance}{%
+\subsection{Explained variance}\label{explained-variance}}
+
+\hypertarget{modify-this-because-you-stole-you-basterd}{%
+\section{(Modify this because you stole you
+basterd)}\label{modify-this-because-you-stole-you-basterd}}
+
+The explained variance tells us how much information (variance) can be
+attributed to each of the principal components. Together, the first two
+principal components contain 95.80\% of the information. The first
+principal component contains 72.77\% of the variance and the second
+principal component contains 23.03\% of the variance. The third and
+fourth principal component contained the rest of the variance of the
+dataset.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}ratio\PYZus{}}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} array([0.77157132, 0.11260519])
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{} Create scaler and fit it to training input data}
+        \PY{n}{scaler} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{train\PYZus{}input}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Create a pipeline for Polynomial regression. Add scaler to scale input data.}
+        \PY{n}{pipeline} \PY{o}{=} \PY{n}{Pipeline}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{scaler}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{scaler}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{model}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+        
+        
+        \PY{c+c1}{\PYZsh{} Create regularization hyperparameter space}
+        \PY{n}{C} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{0.001}\PY{p}{,} \PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{]}
+        \PY{c+c1}{\PYZsh{} Create hyperparameter options}
+        \PY{n}{hyperparameters} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model\PYZus{}\PYZus{}C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{C}\PY{p}{\PYZcb{}}
+        
+        \PY{c+c1}{\PYZsh{} 10\PYZhy{}fold Cross validation}
+        \PY{n}{clf} \PY{o}{=} \PY{n}{GridSearchCV}\PY{p}{(}\PY{n}{estimator}\PY{o}{=}\PY{n}{pipeline}\PY{p}{,} \PY{n}{param\PYZus{}grid}\PY{o}{=}\PY{n}{hyperparameters}\PY{p}{,} \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{refit}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{n\PYZus{}jobs}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{scoring}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{roc\PYZus{}auc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} fit model to training data}
+        \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{train\PYZus{}input}\PY{o}{.}\PY{n}{values}\PY{p}{,} \PY{n}{train\PYZus{}output}\PY{o}{.}\PY{n}{values}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Print the best parameters}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{clf}\PY{o}{.}\PY{n}{best\PYZus{}params\PYZus{}}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Print evaluation measurements}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Best score: }\PY{l+s+si}{\PYZpc{}0.3f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{clf}\PY{o}{.}\PY{n}{best\PYZus{}score\PYZus{}}\PY{p}{)}
+        \PY{n}{predictedData} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{test\PYZus{}input}\PY{p}{)}
+        \PY{n}{cm}\PY{o}{=} \PY{n}{confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{test\PYZus{}output}\PY{o}{.}\PY{n}{values}\PY{p}{,}\PY{n}{predictedData}\PY{p}{)}
+        \PY{n}{cm} \PY{o}{=} \PY{n}{cm}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{float}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{/} \PY{n}{cm}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{newaxis}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} cm = cm / cm.max()}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{'model\_\_C': 0.001\}
+Best score: 1.000
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c+c1}{\PYZsh{}Confusion Matrix}
+        \PY{c+c1}{\PYZsh{}confusion\PYZus{}matrix(y\PYZus{}train\PYZus{}5, y\PYZus{}train\PYZus{}pred)}
+        \PY{c+c1}{\PYZsh{}https://scikit\PYZhy{}learn.org/stable/auto\PYZus{}examples/model\PYZus{}selection/plot\PYZus{}confusion\PYZus{}matrix.html\PYZsh{}sphx\PYZhy{}glr\PYZhy{}auto\PYZhy{}examples\PYZhy{}model\PYZhy{}selection\PYZhy{}plot\PYZhy{}confusion\PYZhy{}matrix\PYZhy{}py}
+        \PY{c+c1}{\PYZsh{}plot using seaborn}
+        \PY{c+c1}{\PYZsh{}kernel trick}
+        \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+        \PY{n}{im} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{cm}\PY{p}{,} \PY{n}{interpolation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nearest}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{Blues}\PY{p}{)}
+        \PY{n}{ax}\PY{o}{.}\PY{n}{figure}\PY{o}{.}\PY{n}{colorbar}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{)}
+        \PY{n}{ax}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{n}{xticks}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{cm}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{,}
+                   \PY{n}{yticks}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{cm}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,}
+                   \PY{c+c1}{\PYZsh{} ... and label them with the respective list entries}
+                   \PY{n}{xticklabels}\PY{o}{=}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,} \PY{n}{yticklabels}\PY{o}{=}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+                   \PY{n}{title}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Confusion matrix}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                   \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                   \PY{n}{xlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Predicted label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}8}]:} [[<matplotlib.axis.YTick at 0x7f596b687b38>,
+          <matplotlib.axis.YTick at 0x7f596b687470>],
+         [Text(0,0,'0'), Text(0,0,'1')],
+         Text(0,0.5,'True label'),
+         [<matplotlib.axis.XTick at 0x7f596b6c3a20>,
+          <matplotlib.axis.XTick at 0x7f596b684898>],
+         [Text(0,0,'0'), Text(0,0,'1')],
+         Text(0.5,0,'Predicted label'),
+         Text(0.5,1,'Confusion matrix')]
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} fpr, tpr, thresholds = roc\PYZus{}curve(predictedData, test\PYZus{}output)}
+        
+        
+        \PY{c+c1}{\PYZsh{} def plot\PYZus{}roc\PYZus{}curve(fpr, tpr, label=None):}
+        \PY{c+c1}{\PYZsh{}     plt.plot(fpr, tpr, linewidth=2, label=label)}
+        \PY{c+c1}{\PYZsh{}     plt.plot([0, 1], [0, 1], \PYZsq{}k\PYZhy{}\PYZhy{}\PYZsq{})}
+        \PY{c+c1}{\PYZsh{}     plt.axis([0, 1, 0, 1])    }
+        \PY{c+c1}{\PYZsh{}     plt.xlabel(\PYZsq{}False Positive Rate\PYZsq{})}
+        \PY{c+c1}{\PYZsh{}     plt.ylabel(\PYZsq{}True Positive Rate\PYZsq{})}
+        \PY{c+c1}{\PYZsh{}     plot\PYZus{}roc\PYZus{}curve(fpr, tpr)}
+        
+        \PY{c+c1}{\PYZsh{} plot\PYZus{}roc\PYZus{}curve(fpr, tpr)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{}Save data}
+         \PY{n}{classifiedUnknownData} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{dataToClassify}\PY{p}{)}
+         \PY{n}{classifiedUnknownData} \PY{o}{=} \PY{n}{classifiedUnknownData}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
+         \PY{n}{np}\PY{o}{.}\PY{n}{savetxt}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{binaryTask/PredictedClasses.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{classifiedUnknownData}\PY{p}{,} \PY{n}{delimiter}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{,}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{c+c1}{\PYZsh{} Load data and assign headers}
+         \PY{n}{sensorData} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{multiclass/X.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{header}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{names}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{768}\PY{p}{)}\PY{p}{)}
+         \PY{n}{classifiedData} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{multiclass/y.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{header}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{names}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{indexes} \PY{o}{=} \PY{n}{classifiedData}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{n}{classifiedData}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{]}
+         
+         \PY{n}{train\PYZus{}input}\PY{p}{,} \PY{n}{test\PYZus{}input}\PY{p}{,} \PY{n}{train\PYZus{}output}\PY{p}{,} \PY{n}{test\PYZus{}output}  \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{sensorData}\PY{p}{,} \PY{n}{classifiedData}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{n}{TEST\PYZus{}SIZE}\PY{p}{,}
+         \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{111}\PY{p}{)}
+         \PY{n}{fig}\PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{16}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{plotData}\PY{p}{(}\PY{n}{train\PYZus{}input}\PY{p}{,}\PY{n}{train\PYZus{}output}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plotData}\PY{p}{(}\PY{n}{train\PYZus{}input}\PY{p}{,}\PY{n}{train\PYZus{}output}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plotData}\PY{p}{(}\PY{n}{train\PYZus{}input}\PY{p}{,}\PY{n}{train\PYZus{}output}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{g}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plotData}\PY{p}{(}\PY{n}{train\PYZus{}input}\PY{p}{,}\PY{n}{train\PYZus{}output}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{c}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plotData}\PY{p}{(}\PY{n}{train\PYZus{}input}\PY{p}{,}\PY{n}{train\PYZus{}output}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/usr/lib64/python3.7/site-packages/matplotlib/cbook/deprecation.py:107: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
+  warnings.warn(message, mplDeprecation, stacklevel=1)
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{\PYZsh{}Standardise data}
+         \PY{c+c1}{\PYZsh{}Split into a test and training set. 80\PYZpc{} training and 20\PYZpc{} test. Randomised.}
+         \PY{n}{train\PYZus{}input}\PY{p}{,} \PY{n}{test\PYZus{}input}\PY{p}{,} \PY{n}{train\PYZus{}output}\PY{p}{,} \PY{n}{test\PYZus{}output}  \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{sensorData}\PY{p}{,} \PY{n}{classifiedData}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{n}{TEST\PYZus{}SIZE}\PY{p}{,}
+         \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{111}\PY{p}{,} \PY{n}{stratify}\PY{o}{=}\PY{n}{classifiedData}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} print(train\PYZus{}output)}
+         \PY{n}{standardisedSensorData} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{train\PYZus{}input}\PY{p}{)}
+         \PY{n}{pca} \PY{o}{=} \PY{n}{PCA}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{principalComponents} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{standardisedSensorData}\PY{p}{)}
+         \PY{n}{principalDf} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{data} \PY{o}{=} \PY{n}{principalComponents}
+                      \PY{p}{,} \PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PCA1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PCA2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{fig}\PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} 
+         
+         
+         \PY{n}{test} \PY{o}{=} \PY{n}{principalDf}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{train\PYZus{}output}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Index}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+         \PY{n}{test} \PY{o}{=} \PY{n}{test}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Index}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+         \PY{c+c1}{\PYZsh{}     print(x)}
+         \PY{c+c1}{\PYZsh{}     print( train\PYZus{}output.index[train\PYZus{}output[\PYZsq{}Y\PYZsq{}] == 4])}
+             \PY{n}{index} \PY{o}{=} \PY{n}{train\PYZus{}output}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{n}{train\PYZus{}output}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n}{x}\PY{p}{]}
+             \PY{n}{pcaData} \PY{o}{=} \PY{n}{test}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{index}\PY{p}{]}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{pcaData}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PCA1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{n}{pcaData}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{PCA2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{linewidths}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Principal Component 1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Principal Component 2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+         \PY{c+c1}{\PYZsh{} legend = ax.legend(loc=\PYZsq{}upper center\PYZsq{}, shadow=True, fontsize=\PYZsq{}x\PYZhy{}large\PYZsq{})}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}ratio\PYZus{}}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:} array([0.43122497, 0.26545301])
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{} Create scaler and fit it to training input data}
+         \PY{n}{scaler} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{train\PYZus{}input}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Create a pipeline for Polynomial regression. Add scaler to scale input data.}
+         \PY{n}{pipeline} \PY{o}{=} \PY{n}{Pipeline}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{scaler}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{scaler}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{model}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{poly}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{decision\PYZus{}function\PYZus{}shape} \PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ovr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+                                                   
+         \PY{c+c1}{\PYZsh{} Create regularization hyperparameter space}
+         \PY{n}{C} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{0.001}\PY{p}{,} \PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{]}
+         \PY{n}{gamma} \PY{o}{=}\PY{p}{[}\PY{l+m+mf}{0.1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{]}
+         \PY{n}{degree}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} Create hyperparameter options}
+         \PY{n}{hyperparameters} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model\PYZus{}\PYZus{}C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{C}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model\PYZus{}\PYZus{}gamma}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{gamma}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model\PYZus{}\PYZus{}degree}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{degree}\PY{p}{\PYZcb{}}
+         
+         \PY{c+c1}{\PYZsh{} 10\PYZhy{}fold Cross validation}
+         \PY{n}{clf} \PY{o}{=} \PY{n}{GridSearchCV}\PY{p}{(}\PY{n}{estimator}\PY{o}{=}\PY{n}{pipeline}\PY{p}{,} \PY{n}{param\PYZus{}grid}\PY{o}{=}\PY{n}{hyperparameters}\PY{p}{,} \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{refit}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{n\PYZus{}jobs}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{scoring}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{f1\PYZus{}micro}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         
+         \PY{c+c1}{\PYZsh{} fit model to training data}
+         \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{train\PYZus{}input}\PY{o}{.}\PY{n}{values}\PY{p}{,} \PY{n}{train\PYZus{}output}\PY{o}{.}\PY{n}{values}\PY{o}{.}\PY{n}{ravel}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Print the best parameters}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{clf}\PY{o}{.}\PY{n}{best\PYZus{}params\PYZus{}}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{}cvm\PYZus{}results to get all results \PYZhy{} Use it for different kernel\PYZsq{}s}
+         
+         \PY{c+c1}{\PYZsh{} Print evaluation measurements}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Best score: }\PY{l+s+si}{\PYZpc{}0.3f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{clf}\PY{o}{.}\PY{n}{best\PYZus{}score\PYZus{}}\PY{p}{)}
+         \PY{n}{predictedData} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{test\PYZus{}input}\PY{p}{)}
+         \PY{n}{cm}\PY{o}{=} \PY{n}{confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{test\PYZus{}output}\PY{o}{.}\PY{n}{values}\PY{p}{,}\PY{n}{predictedData}\PY{p}{)}
+         \PY{n}{cm} \PY{o}{=} \PY{n}{cm}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{float}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{/} \PY{n}{cm}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{newaxis}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} cm = cm / cm.max()/}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{'model\_\_C': 0.001, 'model\_\_degree': 1, 'model\_\_gamma': 10\}
+Best score: 0.969
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{} print(cm)}
+         \PY{c+c1}{\PYZsh{} test = cm.astype(\PYZsq{}float\PYZsq{}) / cm.sum(axis=1)[:, np.newaxis]}
+         \PY{c+c1}{\PYZsh{} print(test)}
+         \PY{c+c1}{\PYZsh{} test = test\PYZus{}output.as\PYZus{}matrix()}
+         \PY{c+c1}{\PYZsh{} for index in range(1,40):}
+         \PY{c+c1}{\PYZsh{}     if(test[index] != predictedData[index]):}
+         \PY{c+c1}{\PYZsh{}         print(\PYZdq{}Not equal\PYZdq{})}
+         \PY{c+c1}{\PYZsh{}     else:}
+         \PY{c+c1}{\PYZsh{}         print(\PYZdq{}Equal\PYZdq{})}
+         \PY{c+c1}{\PYZsh{} print((test\PYZus{}output.values == predictedData).all())}
+         \PY{c+c1}{\PYZsh{} print(test\PYZus{}output.values == predictedData).all()}
+         \PY{c+c1}{\PYZsh{} print(test\PYZus{}output)}
+         \PY{c+c1}{\PYZsh{} print(predictedData)}
+         \PY{c+c1}{\PYZsh{} print(test\PYZus{}output.shape)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{p}{)}
+         \PY{n}{im} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{cm}\PY{p}{,} \PY{n}{interpolation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nearest}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{Blues}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{figure}\PY{o}{.}\PY{n}{colorbar}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set}\PY{p}{(}\PY{n}{xticks}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{cm}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{yticks}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n}{cm}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,}
+                    \PY{c+c1}{\PYZsh{} ... and label them with the respective list entries}
+                    \PY{n}{xticklabels}\PY{o}{=}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,} \PY{n}{yticklabels}\PY{o}{=}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+                    \PY{n}{title}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Confusion matrix}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                    \PY{n}{ylabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                    \PY{n}{xlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Predicted label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} [[<matplotlib.axis.YTick at 0x7f596af886d8>,
+           <matplotlib.axis.YTick at 0x7f596af88d68>,
+           <matplotlib.axis.YTick at 0x7f596b03d5c0>,
+           <matplotlib.axis.YTick at 0x7f59a03c8668>,
+           <matplotlib.axis.YTick at 0x7f59a03c8748>],
+          [Text(0,0,'0'), Text(0,0,'4'), Text(0,0,'3'), Text(0,0,'1'), Text(0,0,'2')],
+          Text(0,0.5,'True label'),
+          [<matplotlib.axis.XTick at 0x7f5969034b00>,
+           <matplotlib.axis.XTick at 0x7f596b03dcf8>,
+           <matplotlib.axis.XTick at 0x7f596b03d860>,
+           <matplotlib.axis.XTick at 0x7f596b705a90>,
+           <matplotlib.axis.XTick at 0x7f596af4fc50>],
+          [Text(0,0,'0'), Text(0,0,'4'), Text(0,0,'3'), Text(0,0,'1'), Text(0,0,'2')],
+          Text(0.5,0,'Predicted label'),
+          Text(0.5,1,'Confusion matrix')]
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{c+c1}{\PYZsh{} \PYZsh{}Stole PCA from https://github.com/mGalarnyk/Python\PYZus{}Tutorials/blob/master/Sklearn/PCA/PCA\PYZus{}Data\PYZus{}Visualization\PYZus{}Iris\PYZus{}Dataset\PYZus{}Blog.ipynb}
+         
+         \PY{c+c1}{\PYZsh{} \PYZsh{} https://towardsdatascience.com/pca\PYZhy{}using\PYZhy{}python\PYZhy{}scikit\PYZhy{}learn\PYZhy{}e653f8989e60}
+         \PY{c+c1}{\PYZsh{} \PYZsh{}Split into a test and training set. 80\PYZpc{} training and 20\PYZpc{} test. Randomised.}
+         \PY{c+c1}{\PYZsh{} train\PYZus{}input, test\PYZus{}input, train\PYZus{}output, test\PYZus{}output  = train\PYZus{}test\PYZus{}split(sensorData, classifiedData, test\PYZus{}size=0.2,}
+         \PY{c+c1}{\PYZsh{} random\PYZus{}state=111)}
+         
+         \PY{c+c1}{\PYZsh{} \PYZsh{} Create scaler and fit it to training input data}
+         \PY{c+c1}{\PYZsh{} scaler = preprocessing.StandardScaler().fit(train\PYZus{}input)}
+         
+         
+         \PY{c+c1}{\PYZsh{} pipeline = Pipeline(((\PYZdq{}polynomial\PYZdq{}, PolynomialFeatures()),}
+         \PY{c+c1}{\PYZsh{}                                (\PYZdq{}scaler\PYZdq{}, scaler),(\PYZdq{}model\PYZdq{},svm.LinearSVC(loss=\PYZdq{}hinge\PYZdq{}))))}
+         
+         
+         \PY{c+c1}{\PYZsh{} \PYZsh{} Create a pipeline for Polynomial regression. Add scaler to scale input data.}
+         \PY{c+c1}{\PYZsh{} \PYZsh{} pipeline = Pipeline([(\PYZdq{}scaler\PYZdq{}, scaler), (\PYZdq{}model\PYZdq{}, svm.SVC(kernel=\PYZsq{}poly\PYZsq{}, decision\PYZus{}function\PYZus{}shape =\PYZsq{}ovr\PYZsq{}))])}
+                                                   
+         \PY{c+c1}{\PYZsh{} \PYZsh{} Create regularization hyperparameter space}
+         \PY{c+c1}{\PYZsh{} C = [0.001, 0.01, 0.1, 1, 10]}
+         \PY{c+c1}{\PYZsh{} \PYZsh{} gamma =[0.1,1,10]}
+         \PY{c+c1}{\PYZsh{} \PYZsh{} Create hyperparameter options}
+         \PY{c+c1}{\PYZsh{} hyperparameters = \PYZob{}\PYZsq{}model\PYZus{}\PYZus{}C\PYZsq{}:C, \PYZsq{}polynomial\PYZus{}\PYZus{}degree\PYZsq{}: range(1, 4)\PYZcb{}}
+         
+         \PY{c+c1}{\PYZsh{} \PYZsh{} 10\PYZhy{}fold Cross validation}
+         \PY{c+c1}{\PYZsh{} clf = GridSearchCV(estimator=pipeline, param\PYZus{}grid=hyperparameters, cv=10, refit=True, n\PYZus{}jobs=1, scoring=\PYZsq{}f1\PYZus{}micro\PYZsq{})}
+         
+         
+         \PY{c+c1}{\PYZsh{} \PYZsh{} fit model to training data}
+         \PY{c+c1}{\PYZsh{} clf.fit(train\PYZus{}input.values, train\PYZus{}output.values.ravel())}
+         
+         \PY{c+c1}{\PYZsh{} \PYZsh{} Print the best parameters}
+         \PY{c+c1}{\PYZsh{} print(clf.best\PYZus{}params\PYZus{})}
+         
+         \PY{c+c1}{\PYZsh{} \PYZsh{} Print evaluation measurements}
+         \PY{c+c1}{\PYZsh{} print(\PYZdq{}Best score: \PYZpc{}0.3f\PYZdq{} \PYZpc{} clf.best\PYZus{}score\PYZus{})}
+         \PY{c+c1}{\PYZsh{} predictedData = clf.predict(test\PYZus{}input)}
+         \PY{c+c1}{\PYZsh{} cm= confusion\PYZus{}matrix(test\PYZus{}output,predictedData)}
+         \PY{c+c1}{\PYZsh{} cm = cm / cm.max()}
+         
+         \PY{c+c1}{\PYZsh{} \PYZsh{} https://www.youtube.com/watch?v=Lsue2gEM9D0}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{c+c1}{\PYZsh{}Save data}
+         \PY{n}{dataToClassify} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{multiclass/XToClassify.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{header}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{names}\PY{o}{=}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{768}\PY{p}{)}\PY{p}{)}
+         \PY{n}{classifiedUnknownData} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{dataToClassify}\PY{p}{)}
+         \PY{n}{classifiedUnknownData} \PY{o}{=} \PY{n}{classifiedUnknownData}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
+         \PY{n}{np}\PY{o}{.}\PY{n}{savetxt}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{multiClassTask/PredictedClasses.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{classifiedUnknownData}\PY{p}{,} \PY{n}{delimiter}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{,}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
